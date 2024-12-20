@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\User\Queries\GetById\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\Base\CoreBase.Dto\CoreBase.Dto.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\Base\CoreBase.Identity\CoreBase.Identity.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\Base\CoreBase.Interfaces\CoreBase.Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\Base\CoreBase.RequestResponse\CoreBase.RequestResponse.csproj" />
+  </ItemGroup>
+
+</Project>

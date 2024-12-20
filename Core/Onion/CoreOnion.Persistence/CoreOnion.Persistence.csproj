@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Base\CoreBase.Domain\CoreBase.Domain.csproj" />
+    <ProjectReference Include="..\..\Base\CoreBase.Extensions\CoreBase.Extensions.csproj" />
+    <ProjectReference Include="..\..\Base\CoreBase.Interfaces\CoreBase.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

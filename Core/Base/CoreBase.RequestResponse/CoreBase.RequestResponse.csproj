@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Request\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreBase.Consts\CoreBase.Consts.csproj" />
+    <ProjectReference Include="..\CoreBase.Dto\CoreBase.Dto.csproj" />
+    <ProjectReference Include="..\CoreBase.Enums\CoreBase.Enums.csproj" />
+  </ItemGroup>
+
+</Project>

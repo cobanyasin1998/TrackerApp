@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>23326e26-1814-41f8-bd69-049f9590e807</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Gateway\TrackerGateway.API\TrackerGateway.API.csproj" />
+    <ProjectReference Include="..\Services\FileStorage.API\FileStorage.API.csproj" />
+    <ProjectReference Include="..\Services\Identity.API\Identity.API.csproj" />
+    <ProjectReference Include="..\Services\Product.API\Product.API.csproj" />
+  </ItemGroup>
+
+</Project>
