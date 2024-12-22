@@ -2,5 +2,5 @@
 
 public interface IBaseEntity : IStatus, ITimeStamp,IOwner
 {
-    long Id { get; set; }
+    Int64 Id { get; set; }
 }

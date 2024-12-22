@@ -4,34 +4,12 @@ namespace CoreBase.Interfaces.RepositoriesInterfaces.EntityFramework;
 
 public interface IReadRepository<T> where T : class
 {
-    // Tüm veriyi IQueryable olarak döndürür
     IQueryable<T> GetAll();
+    Task<T?> GetByIdAsync(Int64 id);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, Boolean>> predicate);
+    Task<Boolean> ExistsAsync(Expression<Func<T, Boolean>> predicate);
+    Task<Int32> CountAsync(Expression<Func<T, Boolean>>? predicate = null);
 
-    // Belirli bir ID'ye göre tek bir kaydı döndürür
-    Task<T?> GetByIdAsync(Guid id);
-
-    // Belirli bir filtreye göre veriyi IQueryable olarak döndürür
-   // IQueryable<T> Find(Expression<Func<T, bool>> predicate);
-
-    // İlk eşleşen kaydı döndürür
-    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
-
-    // Belirli bir kaydın olup olmadığını kontrol eder
-    Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
-
-    // Toplam kayıt sayısını döndürür (isteğe bağlı filtre ile)
-    Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null);
-
-    // Tek bir kayıt döndürür (birden fazla eşleşme varsa hata fırlatır)
-    Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate);
-
-    // Sayfalama destekleyen veri getirme
-   // Task<IPagedResult<T>> GetPagedAsync(int pageNumber, int pageSize, Expression<Func<T, bool>>? predicate = null);
-
-    // Sıralı veri getirme
-    Task<IEnumerable<T>> GetSortedAsync(Expression<Func<T, object>> orderBy, bool ascending = true);
-
-    // Distinct (benzersiz) veriyi getirme
     Task<IEnumerable<T>> GetDistinctAsync(Expression<Func<T, object>> selector);
 
     // Birden fazla ID ile veri getirme

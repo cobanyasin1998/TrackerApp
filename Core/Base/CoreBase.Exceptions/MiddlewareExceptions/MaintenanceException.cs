@@ -3,13 +3,7 @@
 
 public class MaintenanceException : Exception
 {
-    public MaintenanceException()
-    {
-    }
-    public MaintenanceException(string message) : base(message)
-    {
-    }
-    public MaintenanceException(string message, Exception innerException) : base(message, innerException)
+    public MaintenanceException() : base("Service is under maintenance. Please try again later.")
     {
     }
 }

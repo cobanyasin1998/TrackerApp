@@ -2,8 +2,11 @@
 
 public class HttpClientConsts
 {
-    public const string RequestTimeout = "Request Timeout";
-    public const string RequestFailed = "Request Failed";
+    private const string Request = "Request";
+    public const string RequestTimeout = $"{Request} Timeout";
+    public const string RequestFailed = $"{Request} Failed";
+
+
     //// Header isimleri
     //public const string ContentTypeHeader = "Content-Type";   // İçerik tipi başlığı
     //public const string AuthorizationHeader = "Authorization"; // Yetkilendirme başlığı

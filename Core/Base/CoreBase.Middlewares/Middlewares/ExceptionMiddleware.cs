@@ -1,14 +1,13 @@
 ﻿using CoreBase.Consts.General;
+using CoreBase.Exceptions.Handlers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace CoreBase.Middlewares.Middlewares;
 
-public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
+public class ExceptionMiddleware(RequestDelegate _next, ILogger<ExceptionMiddleware> _logger)
 {
-    private readonly RequestDelegate _next = next;
-   // private readonly HttpExceptionHandler _httpExceptionHandler = new();
-    private readonly ILogger<ExceptionMiddleware> _logger = logger;
+    private readonly HttpExceptionHandler _httpExceptionHandler = new();
 
     public async Task InvokeAsync(HttpContext httpContext)
     {
@@ -25,7 +24,6 @@ public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddlewa
     private async Task HandleExceptionAsync(HttpContext context, System.Exception exception)
     {
         context.Response.ContentType = GeneralOperationConsts.ApplicationJsonKey;
-
-     //   await _httpExceptionHandler.HandleExceptionAsync(exception, context);
+        await _httpExceptionHandler.HandleExceptionAsync(exception, context);
     }
 }

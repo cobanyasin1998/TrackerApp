@@ -1,21 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CoreBase.Consts.General;
+using CoreBase.Exceptions.MiddlewareExceptions;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreBase.Middlewares.Middlewares;
 
 public class BotDetectionMiddleware(RequestDelegate _next)
 {
-
     public async Task InvokeAsync(HttpContext context)
     {
-        string userAgent = context.Request.Headers["User-Agent"].ToString();
-
+        string userAgent = context.Request.Headers[GeneralOperationConsts.UserAgent].ToString();
         if (IsBot(userAgent))
-        {
-            context.Response.StatusCode = StatusCodes.Status403Forbidden;
-            await context.Response.WriteAsync("Access denied: Bots are not allowed.");
-            return;
-        }
-
+            throw new BotDetectedException();
         await _next(context);
     }
 

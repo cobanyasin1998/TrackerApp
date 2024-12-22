@@ -1,3 +1,3 @@
 ﻿namespace CoreBase.Dto.Enum;
 
-public record EnumListDto(int Id, String Name);
+public record EnumListDto(Int32 Id, String Name);

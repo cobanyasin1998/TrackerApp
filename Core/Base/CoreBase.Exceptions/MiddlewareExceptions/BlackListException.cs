@@ -1,8 +1,5 @@
 ﻿namespace CoreBase.Exceptions.MiddlewareExceptions;
 
-public class BlackListException : Exception
+public class BlackListException(string message) : Exception(message)
 {
-    public BlackListException(string message) : base(message)
-    {
-    }
 }

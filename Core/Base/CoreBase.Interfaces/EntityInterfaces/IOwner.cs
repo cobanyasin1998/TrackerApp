@@ -2,7 +2,7 @@
 
 public interface IOwner
 {
-    long CreatedUserId { get; set; }
-    long? UpdatedUserId { get; set; }
+    Int64 CreatedUserId { get; set; }
+    Int64? UpdatedUserId { get; set; }
 
 }

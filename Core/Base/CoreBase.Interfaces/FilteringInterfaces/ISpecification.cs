@@ -4,5 +4,5 @@ namespace CoreBase.Interfaces.FilteringInterfaces;
 
 public interface ISpecification<T>
 {
-    Expression<Func<T, bool>> ToExpression();
+    Expression<Func<T, Boolean>> ToExpression();
 }

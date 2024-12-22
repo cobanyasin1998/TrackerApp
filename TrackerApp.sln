@@ -81,6 +81,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorage.API", "Services
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Persistence", "src\Identity\Infrastructure\Identity.Persistence\Identity.Persistence.csproj", "{368F4D5B-D1E3-43F2-B661-A0306A23F0EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreBase.Helpers", "Core\Base\CoreBase.Helpers\CoreBase.Helpers.csproj", "{B00C6569-078D-49BB-8920-8E1ECB41D3EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,6 +193,10 @@ Global
 		{368F4D5B-D1E3-43F2-B661-A0306A23F0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{368F4D5B-D1E3-43F2-B661-A0306A23F0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{368F4D5B-D1E3-43F2-B661-A0306A23F0EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00C6569-078D-49BB-8920-8E1ECB41D3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00C6569-078D-49BB-8920-8E1ECB41D3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00C6569-078D-49BB-8920-8E1ECB41D3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00C6569-078D-49BB-8920-8E1ECB41D3EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -226,5 +232,6 @@ Global
 		{4C4EDFE9-3D61-4D2A-8832-67E262B4DD80} = {68BBDA15-1A9C-4759-A77A-8FE02F33D889}
 		{03AEC9DA-D00F-4824-A24A-74198AAB70F1} = {6806A416-C653-4B3C-AC43-847D408C4DDD}
 		{368F4D5B-D1E3-43F2-B661-A0306A23F0EF} = {E2D6937D-1557-4994-8266-7A05E74BBBDB}
+		{B00C6569-078D-49BB-8920-8E1ECB41D3EE} = {F0AF8CDF-74F5-44C6-9B0C-77DF91EB397B}
 	EndGlobalSection
 EndGlobal

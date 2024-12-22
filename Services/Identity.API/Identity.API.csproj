@@ -17,11 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Onion\CoreOnion.Presentation\CoreOnion.Presentation.csproj" />
+    <ProjectReference Include="..\..\src\Identity\Core\Identity.Application\Identity.Application.csproj" />
     <ProjectReference Include="..\..\TrackerApp.ServiceDefaults\TrackerApp.ServiceDefaults.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

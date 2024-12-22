@@ -7,5 +7,5 @@ public class EncRequest
     [JsonProperty("Id")]
     public String? EncId { get; set; }
     [JsonIgnore]
-    public long Id { get; set; }
+    public Int64 Id { get; set; }
 }
