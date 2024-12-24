@@ -1,24 +1,18 @@
 ﻿using CoreBase.Consts.General;
+using CoreBase.Enums.Exceptions;
 using CoreBase.Exceptions.CustomExceptions;
 using CoreBase.Exceptions.MiddlewareExceptions;
+using CoreBase.Extensions.Json;
+using CoreBase.RequestResponse.Response.Concretes;
 using Microsoft.AspNetCore.Http;
 
 namespace CoreBase.Exceptions.Handlers;
 
 public class HttpExceptionHandler : ExceptionHandler
 {
-    private static readonly Dictionary<Type, (ErrorType errorType, int httpStatusCode)> ExceptionMappings = new()
-{
-    { typeof(BusinessRuleException), (ErrorType.BusinessRuleViolation, StatusCodes.Status400BadRequest) },
-    { typeof(ValidationRuleException), (ErrorType.BusinessRuleViolation, StatusCodes.Status400BadRequest) },
-    { typeof(BlackListRuleException), (ErrorType.AccessDenied, StatusCodes.Status403Forbidden) },
-    { typeof(DataProtectKeyException), (ErrorType.BusinessRuleViolation, StatusCodes.Status400BadRequest) },
-    { typeof(InvalidRequestException), (ErrorType.BadRequest, StatusCodes.Status400BadRequest) }
-};
-
-    private static Task WriteErrorResponse<TError>(HttpContext context, string message, ErrorType errorType, int httpStatusCode, List<TError> errors)
+    private static Task WriteErrorResponse<TError>(HttpContext context, string message, EErrorType errorType, int httpStatusCode, List<TError> errors)
     {
-        var response = Response<object, TError>.CreateFailure(
+        var response = BaseResponseWithCustomErrors<TError>.CreateFailure(
             errors: errors,
             message: message,
             errorType: errorType,
@@ -27,30 +21,43 @@ public class HttpExceptionHandler : ExceptionHandler
 
         context.Response.StatusCode = httpStatusCode;
         context.Response.ContentType = GeneralOperationConsts.ApplicationJsonKey;
-        return context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+        return context.Response.WriteAsync(response.ToJson());
     }
-    protected override Task HandleException(BusinessRuleException exception, HttpContext context)
-        => WriteErrorResponse(context, exception.Message, ErrorType.BusinessRuleViolation, StatusCodes.Status400BadRequest, CreateErrorDetails(exception));
+
+    //protected override Task HandleException(BusinessRuleException exception, HttpContext context)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
     protected override Task HandleException(ValidationRuleException exception, HttpContext context)
-        => WriteErrorResponse(context, exception.Message, ErrorType.BusinessRuleViolation, StatusCodes.Status400BadRequest, exception.ErrorDetails);
-
-    protected override Task HandleException(BlackListRuleException exception, HttpContext context)
-        => WriteErrorResponse(context, exception.Message, ErrorType.AccessDenied, StatusCodes.Status403Forbidden, CreateErrorDetails(exception));
+    {
+        throw new NotImplementedException();
+    }
 
     protected override Task HandleException(DataProtectKeyException exception, HttpContext context)
-        => WriteErrorResponse(context, exception.Message, ErrorType.BusinessRuleViolation, StatusCodes.Status400BadRequest, CreateErrorDetails(exception));
+    {
+        throw new NotImplementedException();
+    }
 
-    private List<object> CreateErrorDetails(Exception? exception)
+    protected override Task HandleException(BlackListException exception, HttpContext context)
     {
         throw new NotImplementedException();
     }
 
     protected override Task HandleException(InvalidRequestException exception, HttpContext context)
-        => WriteErrorResponse(context, exception.Message, ErrorType.BadRequest, StatusCodes.Status400BadRequest, CreateErrorDetails(exception));
+    {
+        throw new NotImplementedException();
+    }
 
     protected override Task HandleException(Exception exception, HttpContext context)
-        => WriteErrorResponse(context, exception.Message, ErrorType.InternalServerError, StatusCodes.Status500InternalServerError, CreateErrorDetails(exception));
+    {
+        throw new NotImplementedException();
+    }
 
+    protected override Task HandleException(BusinessRuleException exception, HttpContext context)
+        => WriteErrorResponse(context, exception.Message, EErrorType.BadRequest, StatusCodes.Status400BadRequest, CreateErrorDetails(exception));
+
+    private static List<string> CreateErrorDetails(Exception exception)
+        => [exception.Message ?? exception.InnerException?.Message ?? GeneralOperationConsts.AnErrorOccurred];
 
 }

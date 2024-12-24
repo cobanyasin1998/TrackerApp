@@ -2,19 +2,21 @@
 
 public static class GeneralOperationConsts
 {
-    private const string Operation = "Operation";
-    public const string OperationSuccessfull = $"{Operation} successfull";
-    public const string OperationFailed = $"{Operation} failed";
+    private static readonly String Operation = "Operation";
+    public static readonly String OperationSuccessfull = $"{Operation} successfull";
+    public static readonly String OperationFailed = $"{Operation} failed";
 
-    public const string ApplicationJsonKey = "application/json";
-    public const string XForwardedForKey = "X-Forwarded-For";
-    public const string UserAgent = "User-Agent";
-    public const string CorrelationIdHeader = "X-Correlation-ID";
-    public const String MaintenanceModeKey = "MaintenanceMode";
+    public static readonly String ApplicationJsonKey = "application/json";
+    public static readonly String XForwardedForKey = "X-Forwarded-For";
+    public static readonly String UserAgent = "User-Agent";
+    public static readonly String CorrelationIdHeader = "X-Correlation-ID";
+    public static readonly String MaintenanceModeKey = "MaintenanceMode";
 
-    public const string MaxRequestSize = "MaxRequestSize";
+    public const String MaxRequestSize = "MaxRequestSize";
 
-    public static string GetRequestBodySizeExceededMessage(long maxRequestSizeInBytes)
+    public static readonly string? AnErrorOccurred = "An Error Occurred";
+
+    public static String GetRequestBodySizeExceededMessage(long maxRequestSizeInBytes)
     {
         return $"Request body exceeds maximum allowed size of {maxRequestSizeInBytes / (1024 * 1024)} MB.";
     }

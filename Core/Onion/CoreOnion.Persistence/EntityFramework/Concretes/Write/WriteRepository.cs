@@ -36,7 +36,7 @@ public class WriteRepository<TEntity, TContext>(TContext Context) : IWriteReposi
         throw new NotImplementedException();
     }
 
-    public Task DeleteByIdAsync(Guid id)
+    public Task DeleteByIdAsync(Int64 id)
     {
         throw new NotImplementedException();
     }
@@ -46,7 +46,7 @@ public class WriteRepository<TEntity, TContext>(TContext Context) : IWriteReposi
         throw new NotImplementedException();
     }
 
-    public Task RemoveRangeAsync(IEnumerable<Guid> ids)
+    public Task RemoveRangeAsync(IEnumerable<Int64> ids)
     {
         throw new NotImplementedException();
     }
@@ -61,7 +61,7 @@ public class WriteRepository<TEntity, TContext>(TContext Context) : IWriteReposi
         throw new NotImplementedException();
     }
 
-    public Task UpdatePartialAsync(Guid id, Expression<Func<TEntity, object>> fields)
+    public Task UpdatePartialAsync(Int64 id, Expression<Func<TEntity, object>> fields)
     {
         throw new NotImplementedException();
     }

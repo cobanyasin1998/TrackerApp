@@ -1,8 +1,8 @@
 ﻿namespace CoreBase.Consts.DataProtection;
 
-public class DataProtectionConsts
+public static class DataProtectionConsts
 {
-    public const string MyPurpose = "MyPurpose";
-    public const string DirectoryKeyPath = "./Keys";
-    public const string NoValidKey = "No Valid Key";
+    public readonly static String MyPurpose = "MyPurpose";
+    public readonly static String DirectoryKeyPath = "./Keys";
+    public readonly static String NoValidKey = "No Valid Key";
 }

@@ -1,8 +1,8 @@
 ﻿namespace CoreBase.Attributes.Enums;
 
 [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-public class EnumMetadataAttribute(string description, int code) : Attribute
+public class EnumMetadataAttribute(String description, Int32 code) : Attribute
 {
-    public string Description { get; } = description;
-    public int Code { get; } = code;
+    public String Description { get; } = description;
+    public Int32 Code { get; } = code;
 }

@@ -68,12 +68,12 @@ public class ReadRepository<TEntity, TContext>(TContext Context) : IReadReposito
         throw new NotImplementedException();
     }
 
-    public Task<TEntity?> GetByIdAsync(Guid id)
+    public Task<TEntity?> GetByIdAsync(Int64 id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<TEntity>> GetByIdsAsync(IEnumerable<Guid> ids)
+    public Task<IEnumerable<TEntity>> GetByIdsAsync(IEnumerable<Int64> ids)
     {
         throw new NotImplementedException();
     }

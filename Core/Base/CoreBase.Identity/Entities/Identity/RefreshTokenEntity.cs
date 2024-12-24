@@ -1,5 +1,7 @@
-﻿namespace CoreBase.Identity.Entities.Identity;
+﻿using CoreBase.Identity.Entities.Base;
 
-public class RefreshTokenEntity
+namespace CoreBase.Identity.Entities.Identity;
+
+public class RefreshTokenEntity : UserEntity
 {
 }

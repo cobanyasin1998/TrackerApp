@@ -4,6 +4,6 @@
 public class GetAllResultDto<T>
 {
     public List<T> Result { get; set; } = [];
-    public int TotalCount { get; set; }
-    public int TotalPage { get; set; }
+    public Int32 TotalCount { get; set; }
+    public Int32 TotalPage { get; set; }
 }

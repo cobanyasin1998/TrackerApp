@@ -1,7 +1,7 @@
 ﻿namespace CoreBase.Consts.Gateway;
 
-public class GatewayGeneralConsts
+public static class GatewayGeneralConsts
 {
-    public const string PathPrefix = "PathPrefix";
-    public const string ApiPrefix = "/api/";
+    public static readonly String PathPrefix = "PathPrefix";
+    public static readonly String ApiPrefix = "/api/";
 }

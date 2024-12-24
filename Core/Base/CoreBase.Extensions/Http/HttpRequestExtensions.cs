@@ -1,5 +1,4 @@
 ﻿using CoreBase.Consts.General;
-using CoreBase.Exceptions.MiddlewareExceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace CoreBase.Extensions.Http;
@@ -21,10 +20,10 @@ public static class HttpRequestExtensions
         remoteIp ??= request.HttpContext.Connection.RemoteIpAddress?.ToString();
 
         if (String.IsNullOrWhiteSpace(remoteIp))
-            throw new IPNotFoundException();
+            throw new Exception("IP Address Not Found");
 
         if (!System.Net.IPAddress.TryParse(remoteIp, out _))
-            throw new InvalidIPAddressException();
+            throw new Exception("Invalid IP Address");
 
         return remoteIp;
     }

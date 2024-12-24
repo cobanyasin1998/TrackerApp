@@ -13,7 +13,7 @@ public interface IReadRepository<T> where T : class
     Task<IEnumerable<T>> GetDistinctAsync(Expression<Func<T, object>> selector);
 
     // Birden fazla ID ile veri getirme
-    Task<IEnumerable<T>> GetByIdsAsync(IEnumerable<Guid> ids);
+    Task<IEnumerable<T>> GetByIdsAsync(IEnumerable<Int64> ids);
 
     // İlk eşleşen kaydı getirme
     Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate);

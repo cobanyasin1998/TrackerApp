@@ -1,10 +1,7 @@
 ﻿namespace CoreBase.Consts.Middleware;
 
-public class BlackListConsts
+public static class BlackListConsts
 {
-    public const string BlackList = $"BlackList";
-    public const string AccessDeniedBlackListed = $"Access Denied: Your is blacklisted.";
-    
-
-
+    public static readonly String BlackList = "BlackList";
+    public static readonly String AccessDeniedBlackListed = "Access Denied: Your is blacklisted.";
 }

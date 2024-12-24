@@ -15,7 +15,6 @@
     <ProjectReference Include="..\CoreBase.Attributes\CoreBase.Attributes.csproj" />
     <ProjectReference Include="..\CoreBase.Consts\CoreBase.Consts.csproj" />
     <ProjectReference Include="..\CoreBase.Dto\CoreBase.Dto.csproj" />
-    <ProjectReference Include="..\CoreBase.Exceptions\CoreBase.Exceptions.csproj" />
     <ProjectReference Include="..\CoreBase.Interfaces\CoreBase.Interfaces.csproj" />
   </ItemGroup>
 

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CoreBase.Consts\CoreBase.Consts.csproj" />
     <ProjectReference Include="..\CoreBase.Dto\CoreBase.Dto.csproj" />
+    <ProjectReference Include="..\CoreBase.Extensions\CoreBase.Extensions.csproj" />
     <ProjectReference Include="..\CoreBase.RequestResponse\CoreBase.RequestResponse.csproj" />
   </ItemGroup>
 
