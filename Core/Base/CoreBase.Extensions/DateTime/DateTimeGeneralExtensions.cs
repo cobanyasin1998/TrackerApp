@@ -4,7 +4,7 @@ public static class DateTimeGeneralExtensions
 {
     public static string ToHumanReadable(this System.DateTime dateTime)
     {
-        var timeSpan = System.DateTime.UtcNow - dateTime;
+        TimeSpan timeSpan = System.DateTime.UtcNow - dateTime;
 
         if (timeSpan.TotalMinutes < 1) return "Just now";
         if (timeSpan.TotalMinutes < 60) return $"{timeSpan.TotalMinutes:F0} minutes ago";
@@ -12,24 +12,23 @@ public static class DateTimeGeneralExtensions
 
         return dateTime.ToString("MMM dd, yyyy");
     }
-    public static int GetAge(this System.DateTime birthDate)
+    public static Int32 GetAge(this System.DateTime birthDate)
     {
-        var today = System.DateTime.Today;
-        var age = today.Year - birthDate.Year;
+        System.DateTime today = System.DateTime.Today;
+        Int32 age = today.Year - birthDate.Year;
 
         if (birthDate.Date > today.AddYears(-age)) age--;
 
         return age;
     }
 
-    public static bool IsWeekend(this System.DateTime date)
+    public static Boolean IsWeekend(this System.DateTime date)
         => date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
  
     public static IEnumerable<System.DateTime> GetDatesBetween(System.DateTime startDate, System.DateTime endDate)
     {
-        for (var date = startDate; date <= endDate; date = date.AddDays(1))
+        for (System.DateTime date = startDate; date <= endDate; date = date.AddDays(1))
             yield return date;
-        
     }
 
     public static System.DateTime GetStartOfDay(System.DateTime date) 

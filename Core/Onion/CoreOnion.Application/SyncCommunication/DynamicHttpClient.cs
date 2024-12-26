@@ -30,7 +30,7 @@ public class DynamicHttpClient(IHttpContextAccessor httpContextAccessor)
                 Method = options.Method
             };
 
-            if (_httpContextAccessor.HttpContext?.GetToken(out var token) == true)
+            if (_httpContextAccessor.HttpContext?.GetToken(out String token) == true)
                 requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             if (options.Data is not null && (options.Method == HttpMethod.Post || options.Method == HttpMethod.Put))

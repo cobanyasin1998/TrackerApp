@@ -47,7 +47,7 @@ public class ReadRepository<TEntity, TContext>(TContext Context) : IReadReposito
     public IQueryable<TEntity> GetAllWithIncludesAsync(params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = Query;
-        foreach (var include in includes)
+        foreach (Expression<Func<TEntity, object>> include in includes)
         {
             query = query.Include(include);
         }

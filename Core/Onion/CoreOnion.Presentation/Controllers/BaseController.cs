@@ -1,4 +1,4 @@
-﻿using CoreBase.RequestResponse.Response.Interfaces;
+﻿using CoreBase.Interfaces.RequestInterfaces;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +13,7 @@ public class BaseController : ControllerBase
         _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
 
-    protected IActionResult HandleResponse<T>(T result) where T : IBaseResponseNoData
+    protected IActionResult HandleResponse<T>(T result) where T : ICoreResponse
     {
         return result.HttpStatusCode switch
         {

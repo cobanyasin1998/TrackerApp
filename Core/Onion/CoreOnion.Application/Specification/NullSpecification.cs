@@ -5,6 +5,6 @@ namespace CoreOnion.Application.Specification;
 
 public class NullSpecification<T> : ISpecification<T>
 {
-    public Expression<Func<T, bool>> ToExpression()
+    public Expression<Func<T, Boolean>> ToExpression()
         => x => true;
 }

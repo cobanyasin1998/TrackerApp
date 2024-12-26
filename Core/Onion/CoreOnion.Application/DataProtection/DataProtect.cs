@@ -7,22 +7,22 @@ namespace CoreOnion.Application.DataProtection;
 
 public class DataProtect(IDataProtector _dataProtector) : IDataProtect
 {
-    public long Decrypt(String encryptedText)
+    public Int64 Decrypt(String encryptedText)
     {
-        if (string.IsNullOrWhiteSpace(encryptedText))
+        if (String.IsNullOrWhiteSpace(encryptedText))
             ThrowInvalidKeyException(encryptedText);
 
         String key = _dataProtector.Unprotect(encryptedText);
 
-        if (!long.TryParse(key, out long result))
+        if (!Int64.TryParse(key, out Int64 result))
             ThrowInvalidKeyException(encryptedText);
 
         return result;
     }
 
-    public String Encrypt(long originalId)
+    public String Encrypt(Int64 originalId)
         => _dataProtector.Protect(originalId.ToString());
 
-    private static void ThrowInvalidKeyException(string encryptedText)
+    private static void ThrowInvalidKeyException(String encryptedText)
         => throw new DataProtectKeyException(DataProtectionConsts.NoValidKey, encryptedText);
 }

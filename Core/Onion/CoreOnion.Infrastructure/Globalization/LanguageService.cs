@@ -7,9 +7,9 @@ namespace CoreOnion.Infrastructure.Globalization;
 
 public class LanguageService(ICacheProvider _cacheProvider) : ILanguageService
 {
-    public async Task<string> GetValueAsync(string key, string lang)
+    public async Task<string> GetValueAsync(String key, String lang)
     {
-        string cacheKey = $"{lang}:{key}";
+        String cacheKey = $"{lang}:{key}";
 
         String? cachedValue = await _cacheProvider.GetAsync(cacheKey);
         if (!String.IsNullOrWhiteSpace(cachedValue))
@@ -18,11 +18,11 @@ public class LanguageService(ICacheProvider _cacheProvider) : ILanguageService
         return key.AddSpacesBeforeUppercase();
     }
 
-    public async Task<IDictionary<string, string>> GetValuesAsync(IEnumerable<string> keys, string lang)
+    public async Task<IDictionary<string, string>> GetValuesAsync(IEnumerable<String> keys, String lang)
     {
-        Dictionary<string, string> result = [];
+        Dictionary<String, String> result = [];
 
-        foreach (var key in keys)
+        foreach (String key in keys)
             result[key] = await GetValueAsync(key,lang);
         
         return result;

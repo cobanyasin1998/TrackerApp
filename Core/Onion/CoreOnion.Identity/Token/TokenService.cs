@@ -12,7 +12,7 @@ namespace CoreOnion.Identity.Token;
 
 public class TokenService(IConfiguration _configuration) : ITokenService
 {
-    public string GenerateAccessToken(UserEntity user)
+    public String GenerateAccessToken(UserEntity user)
     {
         List<Claim> claims = GetClaims(user);
 
@@ -39,6 +39,6 @@ public class TokenService(IConfiguration _configuration) : ITokenService
         return claims;
     }
 
-    public string GenerateRefreshToken()
+    public String GenerateRefreshToken()
         => Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 }

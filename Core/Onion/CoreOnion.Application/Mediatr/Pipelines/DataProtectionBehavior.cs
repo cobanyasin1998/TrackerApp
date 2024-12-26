@@ -1,5 +1,5 @@
-﻿using CoreBase.Interfaces.DataProtectInterfaces;
-using CoreBase.RequestResponse.Response.Concretes;
+﻿using CoreBase.Dto.Core.EncryptedDto;
+using CoreBase.Interfaces.DataProtectInterfaces;
 using MediatR;
 using System.Reflection;
 
@@ -10,24 +10,24 @@ public class DataProtectionBehavior<TRequest, TResponse>(IDataProtect _dataProte
    where TRequest : IBaseRequest
    where TResponse : class
 {
-    private const string Id = "Id";
-    private const string EncId = "EncId";
+    private const String Id = "Id";
+    private const String EncId = "EncId";
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         PropertyInfo[] properties = request.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
         foreach (PropertyInfo property in properties)
         {
-            if (property.Name.Equals(EncId, StringComparison.OrdinalIgnoreCase) && property.PropertyType == typeof(string))
+            if (property.Name.Equals(EncId, StringComparison.OrdinalIgnoreCase) && property.PropertyType == typeof(String))
             {
-                string? currentValue = property.GetValue(request) as string;
-                if (!string.IsNullOrEmpty(currentValue))
+                String? currentValue = property.GetValue(request) as String;
+                if (!String.IsNullOrEmpty(currentValue))
                 {
-                    long decryptedValue = _dataProtectService.Decrypt(currentValue);
+                    Int64 decryptedValue = _dataProtectService.Decrypt(currentValue);
 
                     PropertyInfo? decryptedIdProperty = request.GetType().GetProperty(Id);
 
-                    if (decryptedIdProperty is not null && decryptedIdProperty.PropertyType == typeof(long))
+                    if (decryptedIdProperty is not null && decryptedIdProperty.PropertyType == typeof(Int64))
                         decryptedIdProperty.SetValue(request, decryptedValue);
                 }
             }
@@ -36,8 +36,8 @@ public class DataProtectionBehavior<TRequest, TResponse>(IDataProtect _dataProte
 
         dynamic dynamicResponse = response;
 
-        //if (dynamicResponse?.Data is BaseResponse baseResponse)
-        //    baseResponse.EncId = _dataProtectService.Encrypt(baseResponse.Id);
+        if (dynamicResponse?.Data is EncryptedResponseDto encryptedResponseDto)
+            encryptedResponseDto.EncId = _dataProtectService.Encrypt(encryptedResponseDto.Id);
         return response;
     }
 

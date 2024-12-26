@@ -1,5 +1,5 @@
 ﻿using CoreBase.Interfaces.ControllerInterfaces;
-using CoreBase.RequestResponse.Response.Interfaces;
+using CoreBase.Interfaces.RequestInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreOnion.Presentation.Controllers;
@@ -16,14 +16,14 @@ public abstract class AbstractController<TCreateReq, TUpdateReq, TDeleteReq, TGe
     public virtual async Task<IActionResult> Create([FromBody] TCreateReq request)
     {
         object? response = await Mediator!.Send(request);
-        return HandleResponse((IBaseResponseNoData)response);
+        return HandleResponse((ICoreResponse)response);
     }
 
     [HttpPut]
     public virtual async Task<IActionResult> Update([FromBody] TUpdateReq request)
     {
         object? response = await Mediator.Send(request);
-        return HandleResponse((IBaseResponseNoData)response);
+        return HandleResponse((ICoreResponse)response);
     }
 
     [HttpPost]
@@ -31,19 +31,19 @@ public abstract class AbstractController<TCreateReq, TUpdateReq, TDeleteReq, TGe
     {
 
         object? response = await Mediator!.Send(getByIdRequest);
-        return HandleResponse((IBaseResponseNoData)response);
+        return HandleResponse((ICoreResponse)response);
     }
 
     [HttpPost]
     public virtual async Task<IActionResult> GetAll([FromBody] TGetAllReq request)
     {
         object? response = await Mediator!.Send(request);
-        return HandleResponse((IBaseResponseNoData)response);
+        return HandleResponse((ICoreResponse)response);
     }
     [HttpPost]
     public virtual async Task<IActionResult> Delete([FromBody] TDeleteReq deleteRequest)
     {
         object? response = await Mediator!.Send(deleteRequest);
-        return HandleResponse((IBaseResponseNoData)response);
+        return HandleResponse((ICoreResponse)response);
     }
 }

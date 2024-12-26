@@ -2,15 +2,15 @@
 
 public static class FileGeneralExtensions
 {
-    public static bool IsValidFileExtension(string fileName, string[] allowedExtensions)
+    public static Boolean IsValidFileExtension(String fileName, String[] allowedExtensions)
     {
-        var fileExtension = Path.GetExtension(fileName).ToLower();
+        String fileExtension = Path.GetExtension(fileName).ToLower();
         return allowedExtensions.Contains(fileExtension);
     }
 
-    public static string GenerateUniqueFileName(string originalFileName)
+    public static String GenerateUniqueFileName(String originalFileName)
     {
-        var extension = Path.GetExtension(originalFileName);
+        String extension = Path.GetExtension(originalFileName);
         return $"{System.Guid.NewGuid()}{extension}";
     }
 }

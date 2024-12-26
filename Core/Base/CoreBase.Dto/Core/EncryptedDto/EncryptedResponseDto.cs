@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 
-namespace CoreBase.RequestResponse.Response.Concretes;
+namespace CoreBase.Dto.Core.EncryptedDto;
 
-public class EncResponse
+public class EncryptedResponseDto
 {
     [JsonIgnore]
-    public long Id { get; set; }
+    public Int64 Id { get; set; }
     [JsonProperty(nameof(Id))]
     public String EncId { get; set; } = String.Empty;
 }

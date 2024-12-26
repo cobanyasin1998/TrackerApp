@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace CoreBase.Dto.RequestResponse.Request;
+namespace CoreBase.Dto.Core.EncryptedDto;
 
-public class EncRequest
+public class EncryptedRequestDto
 {
     [JsonProperty("Id")]
     public String? EncId { get; set; }

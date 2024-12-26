@@ -1,4 +1,4 @@
-﻿using CoreBase.RequestResponse.Response.Concretes;
+﻿using CoreBase.Dto.Core.CoreResponse;
 using MediatR;
 
 namespace Identity.Application.Features.User.Commands.Create;

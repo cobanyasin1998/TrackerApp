@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using CoreBase.Dto.OperationResult;
+using CoreBase.Dto.Core.CoreResponse;
 using CoreBase.Identity.Entities.Base;
-using CoreBase.RequestResponse.Response.Concretes;
 using Identity.Application.Abstractions.UnitOfWork;
 using Identity.Application.Features.User.Constants;
 using MediatR;

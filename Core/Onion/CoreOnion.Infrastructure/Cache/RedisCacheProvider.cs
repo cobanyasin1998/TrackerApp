@@ -19,19 +19,19 @@ public class RedisCacheProvider : ICacheProvider
         return value.HasValue ? value.ToString() : null;
     }
 
-    public async Task<IDictionary<string, string?>> GetManyAsync(IEnumerable<string> keys)
+    public async Task<IDictionary<String, String?>> GetManyAsync(IEnumerable<String> keys)
     {
 
-        var keyArray = keys.ToArray();
-        var redisKeys = keyArray.Select(key => (RedisKey)key).ToArray();
-        var values = await _redisDatabase.StringGetAsync(redisKeys);
+        String[]? keyArray = keys.ToArray();
+        RedisKey[]? redisKeys = keyArray.Select(key => (RedisKey)key).ToArray();
+        RedisValue[]? values = await _redisDatabase.StringGetAsync(redisKeys);
 
         return keyArray.Zip(values, (key, value) => new { key, value = value.HasValue ? value.ToString() : null })
                        .ToDictionary(x => x.key, x => x.value);
 
     }
 
-    public async Task SetAsync(string key, string value, TimeSpan expiration)
+    public async Task SetAsync(String key, String value, TimeSpan expiration)
     {
         await _redisDatabase.StringSetAsync(key, value, expiration);
     }
