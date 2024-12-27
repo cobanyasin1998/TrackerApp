@@ -15,6 +15,7 @@
     <ProjectReference Include="..\..\..\..\Core\Base\CoreBase.Dto\CoreBase.Dto.csproj" />
     <ProjectReference Include="..\..\..\..\Core\Base\CoreBase.Identity\CoreBase.Identity.csproj" />
     <ProjectReference Include="..\..\..\..\Core\Base\CoreBase.Interfaces\CoreBase.Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\..\Core\Onion\CoreOnion.Application\CoreOnion.Application.csproj" />
   </ItemGroup>
 
 </Project>

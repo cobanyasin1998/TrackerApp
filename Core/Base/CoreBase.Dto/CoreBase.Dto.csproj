@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CoreBase.Consts\CoreBase.Consts.csproj" />
     <ProjectReference Include="..\CoreBase.Interfaces\CoreBase.Interfaces.csproj" />
   </ItemGroup>
 

@@ -9,7 +9,7 @@ builder.Services.AddOpenApi();
 WebApplication app = builder.Build();
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
+//app.UseAuthorization();
 //app.MapReverseProxy();
 
-app.Run();
+await app.RunAsync();

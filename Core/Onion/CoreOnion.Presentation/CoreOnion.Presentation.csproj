@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Base\CoreBase.Interfaces\CoreBase.Interfaces.csproj" />
-    <ProjectReference Include="..\..\Base\CoreBase.RequestResponse\CoreBase.RequestResponse.csproj" />
   </ItemGroup>
 
 </Project>

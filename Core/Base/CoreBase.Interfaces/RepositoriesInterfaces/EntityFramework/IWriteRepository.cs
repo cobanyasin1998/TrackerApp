@@ -11,7 +11,6 @@ public interface IWriteRepository<T> where T : class
     Task DeleteAsync(T entity);
     Task DeleteByIdAsync(Int64 id);
     Task DeleteRangeAsync(IEnumerable<T> entities);
-    Task SaveAsync();
     Task AttachAsync(T entity);
     Task RemoveRangeAsync(IEnumerable<Int64> ids);
     Task UpdatePartialAsync(Int64 id, Expression<Func<T, Object>> fields);

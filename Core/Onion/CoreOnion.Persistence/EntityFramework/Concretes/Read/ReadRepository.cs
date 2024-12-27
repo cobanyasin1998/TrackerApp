@@ -12,129 +12,79 @@ public class ReadRepository<TEntity, TContext>(TContext Context) : IReadReposito
     where TEntity : BaseEntity
     where TContext : DbContext
 {
-    public DbSet<TEntity> Table
-        => Context.Set<TEntity>();
-    public IQueryable<TEntity> Query 
-        => Table.BaseQuery();
+    public DbSet<TEntity> Table => Context.Set<TEntity>();
+    public IQueryable<TEntity> Query => Table.BaseQuery();
 
+    public Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
+        => predicate == null ? Query.CountAsync() : Query.CountAsync(predicate);
 
-    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        return await Query.AnyAsync(predicate);
-    }
-    public async Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
-    {
-        return predicate is null
-           ? await Query.CountAsync()
-           : await Query.CountAsync(predicate);
-    }
-    public async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        return await Query.AnyAsync(predicate);
-    }
-    public IQueryable<TEntity> WhereIf(Expression<Func<TEntity, bool>> predicate)
-    {
-        return Context.Set<TEntity>().Where(predicate);
-    }
-    public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        return await Query.FirstOrDefaultAsync(predicate);
-    }//
-    public IQueryable<TEntity> GetAll()
-    {
-        return Query;
-    }
+    public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
+        => Query.AnyAsync(predicate);
+
+    public Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        => Query.FirstOrDefaultAsync(predicate);
+
+    public IQueryable<TEntity> GetAll(bool tracking = false)
+        => tracking ? Query : Query.AsNoTracking();
+
     public IQueryable<TEntity> GetAllWithIncludesAsync(params Expression<Func<TEntity, object>>[] includes)
     {
-        IQueryable<TEntity> query = Query;
+        IQueryable<TEntity>? query = Query.AsQueryable();
         foreach (Expression<Func<TEntity, object>> include in includes)
         {
             query = query.Include(include);
         }
         return query;
     }
-    public async Task<decimal> GetAverageAsync(Expression<Func<TEntity, decimal>> selector)
-    {
-        return await Query.AverageAsync(selector);
-    }
+
+    public Task<decimal> GetAverageAsync(Expression<Func<TEntity, decimal>> selector)
+        => Query.AverageAsync(selector);
+
     public IQueryable<TEntity> GetByDateRangeAsync(DateTime startDate, DateTime endDate)
-    {
-        return Context.Set<TEntity>()
-            .Where(e => e.CreatedTime >= startDate && e.CreatedTime <= endDate);
-    }
+        => Query.Where(x => x.CreatedTime >= startDate && x.CreatedTime <= endDate);
 
-    public Task<IEnumerable<TEntity>> GetByFilterAsync(Expression<Func<TEntity, bool>> filter)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<TEntity>> GetByFilterAsync(Expression<Func<TEntity, bool>> filter)
+        => await Query.Where(filter).ToListAsync();
 
-    public Task<TEntity?> GetByIdAsync(Int64 id)
-    {
-        throw new NotImplementedException();
-    }
+    public Task<TEntity?> GetByIdAsync(long id)
+        => Query.FirstOrDefaultAsync(e => e.Id == id);
 
-    public Task<IEnumerable<TEntity>> GetByIdsAsync(IEnumerable<Int64> ids)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<TEntity>> GetByIdsAsync(IEnumerable<long> ids)
+        => await Query.Where(e => ids.Contains(e.Id)).ToListAsync();
 
     public Task<int> GetCountByPredicateAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        throw new NotImplementedException();
-    }
+        => Query.CountAsync(predicate);
 
-    public Task<IEnumerable<TEntity>> GetDistinctAsync(Expression<Func<TEntity, object>> selector)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<TEntity>> GetDistinctAsync(Expression<Func<TEntity, object>> selector)
+        => await Query.Select(selector).Distinct().Cast<TEntity>().ToListAsync();
 
     public Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        throw new NotImplementedException();
-    }
+        => Query.FirstOrDefaultAsync(predicate);
 
-    public Task<IEnumerable<TEntity>> GetLatestAsync(int top = 10)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<TEntity>> GetLatestAsync(int top = 10)
+        => await Query.OrderByDescending(e => e.CreatedTime).Take(top).ToListAsync();
 
     public Task<TEntity?> GetLatestByFieldAsync(Expression<Func<TEntity, object>> field)
-    {
-        throw new NotImplementedException();
-    }
+        => Query.OrderByDescending(field).FirstOrDefaultAsync();
 
     public Task<TEntity?> GetMaxAsync(Expression<Func<TEntity, decimal>> selector)
-    {
-        throw new NotImplementedException();
-    }
+        => Query.OrderByDescending(selector).FirstOrDefaultAsync();
 
     public Task<TEntity?> GetMinAsync(Expression<Func<TEntity, decimal>> selector)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<IEnumerable<TEntity>> GetSortedAsync(Expression<Func<TEntity, object>> orderBy, bool ascending = true)
-    {
-        throw new NotImplementedException();
-    }
+        => Query.OrderBy(selector).FirstOrDefaultAsync();
 
     public Task<decimal> GetSumAsync(Expression<Func<TEntity, decimal>> selector)
+        => Query.SumAsync(selector);
+
+    public async Task<IEnumerable<TEntity>> GetTopAsync(int top, Expression<Func<TEntity, bool>>? predicate = null)
     {
-        throw new NotImplementedException();
+        IQueryable<TEntity>? query = predicate == null ? Query : Query.Where(predicate);
+        return await query.Take(top).ToListAsync();
     }
 
-    public Task<IEnumerable<TEntity>> GetTopAsync(int top, Expression<Func<TEntity, bool>>? predicate = null)
-    {
-        throw new NotImplementedException();
-    }
+    public IQueryable<TEntity> GetWhere(Expression<Func<TEntity, bool>> predicate, bool tracking = false)
+        => tracking ? Query.Where(predicate) : Query.Where(predicate).AsNoTracking();
 
-    public Task<IEnumerable<IGrouping<TKey, TEntity>>> GroupByAsync<TKey>(Expression<Func<TEntity, TKey>> keySelector)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IEnumerable<IGrouping<TKey, TEntity>>> GroupByAsync<TKey>(Expression<Func<TEntity, TKey>> keySelector)
+        => await Query.GroupBy(keySelector).ToListAsync();
 }

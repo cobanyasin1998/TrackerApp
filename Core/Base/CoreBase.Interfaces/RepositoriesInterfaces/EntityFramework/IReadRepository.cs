@@ -4,67 +4,76 @@ namespace CoreBase.Interfaces.RepositoriesInterfaces.EntityFramework;
 
 public interface IReadRepository<T> where T : class
 {
-    IQueryable<T> GetAll();
-    Task<T?> GetByIdAsync(Int64 id);
-    Task<T?> FirstOrDefaultAsync(Expression<Func<T, Boolean>> predicate);
-    Task<Boolean> ExistsAsync(Expression<Func<T, Boolean>> predicate);
-    Task<Int32> CountAsync(Expression<Func<T, Boolean>>? predicate = null);
+    // Get all records with optional tracking
+    IQueryable<T> GetAll(bool tracking = false);
 
+    // Get records matching a predicate with optional tracking
+    IQueryable<T> GetWhere(Expression<Func<T, bool>> predicate, bool tracking = false);
+
+    // Get a record by ID
+    Task<T?> GetByIdAsync(long id);
+
+    // Get the first record matching a predicate
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+
+    // Check if any record matches a predicate
+    Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
+
+    // Count records matching a predicate (or all if null)
+    Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null);
+
+    // Get distinct records based on a selector
     Task<IEnumerable<T>> GetDistinctAsync(Expression<Func<T, object>> selector);
 
-    // Birden fazla ID ile veri getirme
-    Task<IEnumerable<T>> GetByIdsAsync(IEnumerable<Int64> ids);
+    // Get records by multiple IDs
+    Task<IEnumerable<T>> GetByIdsAsync(IEnumerable<long> ids);
 
-    // İlk eşleşen kaydı getirme
+    // Get the first record matching a predicate
     Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
 
-    // Belirli bir kaydın olup olmadığını kontrol etme
-    Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
-
-    // Maksimum değeri getirme
+    // Get the maximum value based on a selector
     Task<T?> GetMaxAsync(Expression<Func<T, decimal>> selector);
 
-    // Minimum değeri getirme
+    // Get the minimum value based on a selector
     Task<T?> GetMinAsync(Expression<Func<T, decimal>> selector);
 
-    // Toplam değer (sum) getirme
+    // Get the sum of values based on a selector
     Task<decimal> GetSumAsync(Expression<Func<T, decimal>> selector);
 
-    // Ortalama değeri (average) getirme
+    // Get the average of values based on a selector
     Task<decimal> GetAverageAsync(Expression<Func<T, decimal>> selector);
 
-    // Veriyi gruplama
+    // Group records by a key selector
     Task<IEnumerable<IGrouping<TKey, T>>> GroupByAsync<TKey>(Expression<Func<T, TKey>> keySelector);
 
-    // En üstteki (top) kayıtları getirme
+    // Get the top N records optionally filtered by a predicate
     Task<IEnumerable<T>> GetTopAsync(int top, Expression<Func<T, bool>>? predicate = null);
 
-    // En son eklenen verileri getirme
+    // Get the most recently added records
     Task<IEnumerable<T>> GetLatestAsync(int top = 10);
 
-    // Belirli bir tarih aralığındaki verileri getirme
+    // Get records within a date range
     IQueryable<T> GetByDateRangeAsync(DateTime startDate, DateTime endDate);
 
-    // İlişkili verilerle veri getirme (Eager Loading)
+    // Include related data (eager loading)
     IQueryable<T> GetAllWithIncludesAsync(params Expression<Func<T, object>>[] includes);
 
-    // Belirli bir alan üzerinde en son veriyi getirme
+    // Get the latest record based on a specific field
     Task<T?> GetLatestByFieldAsync(Expression<Func<T, object>> field);
 
-    // Belirli bir predicate'e göre kayıt sayısını getirme
+    // Count records by a specific predicate
     Task<int> GetCountByPredicateAsync(Expression<Func<T, bool>> predicate);
 
-    // Dinamik filtreleme ile veri getirme
+    // Get records matching a dynamic filter
     Task<IEnumerable<T>> GetByFilterAsync(Expression<Func<T, bool>> filter);
 
-    // Tek bir nesnenin olup olmadığını kontrol etme
-    //Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
-
-    // Sayfalama ve sıralama ile veri getirme
+    //// Paginated and sorted data retrieval
     //Task<IPagedResult<T>> GetPagedAndSortedAsync(
     //    int pageNumber,
     //    int pageSize,
     //    Expression<Func<T, bool>>? predicate = null,
-    //    Expression<Func<T, object>> orderBy = null,
-    //    bool ascending = true);
+    //    Expression<Func<T, object>>? orderBy = null,
+    //    bool ascending = true,
+    //    bool tracking = false,
+    //    params Expression<Func<T, object>>[] includes);
 }

@@ -11,8 +11,6 @@ public class BaseController : ControllerBase
     private IMediator? _mediator;
     protected IMediator? Mediator =>
         _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
-
-
     protected IActionResult HandleResponse<T>(T result) where T : ICoreResponse
     {
         return result.HttpStatusCode switch
@@ -21,10 +19,7 @@ public class BaseController : ControllerBase
             StatusCodes.Status404NotFound => NotFound(result),
             StatusCodes.Status401Unauthorized => Unauthorized(result),
             StatusCodes.Status200OK => Ok(result),
-            _ => StatusCode(result.HttpStatusCode, new
-            {
-                result.Message
-            })
+            _ => StatusCode(result.HttpStatusCode, new { result })
         };
     }
 }

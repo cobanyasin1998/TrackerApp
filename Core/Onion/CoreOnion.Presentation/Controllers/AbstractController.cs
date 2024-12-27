@@ -16,7 +16,7 @@ public abstract class AbstractController<TCreateReq, TUpdateReq, TDeleteReq, TGe
     public virtual async Task<IActionResult> Create([FromBody] TCreateReq request)
     {
         object? response = await Mediator!.Send(request);
-        return HandleResponse((ICoreResponse)response);
+        return HandleResponse(response as ICoreResponse);
     }
 
     [HttpPut]

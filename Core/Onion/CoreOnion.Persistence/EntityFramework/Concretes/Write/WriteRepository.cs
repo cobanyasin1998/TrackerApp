@@ -3,71 +3,94 @@ using CoreBase.Extensions.IQueryable;
 using CoreBase.Interfaces.RepositoriesInterfaces.EntityFramework;
 using CoreOnion.Persistence.EntityFramework.Abstractions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace CoreOnion.Persistence.EntityFramework.Concretes.Write;
-
 public class WriteRepository<TEntity, TContext>(TContext Context) : IWriteRepository<TEntity>, IRepository<TEntity>
  where TEntity : BaseEntity
  where TContext : DbContext
 {
-    public DbSet<TEntity> Table
+    public DbSet<TEntity> Table 
         => Context.Set<TEntity>();
-    public IQueryable<TEntity> Query
-        => Table.BaseQuery();
 
-    public Task AddAsync(TEntity entity)
+    public async Task AddAsync(TEntity entity)
     {
-        throw new NotImplementedException();
+        await Table.AddAsync(entity);
     }
 
-    public Task AddRangeAsync(IEnumerable<TEntity> entities)
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
     {
-        throw new NotImplementedException();
+        await Table.AddRangeAsync(entities);
     }
 
     public Task AttachAsync(TEntity entity)
     {
-        throw new NotImplementedException();
+        Table.Attach(entity);
+        return Task.CompletedTask;
     }
 
     public Task DeleteAsync(TEntity entity)
     {
-        throw new NotImplementedException();
+        Table.Remove(entity);
+        return Task.CompletedTask;
     }
 
-    public Task DeleteByIdAsync(Int64 id)
+    public async Task DeleteByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        TEntity? entity = await Table.FindAsync(id);
+        if (entity != null)
+        {
+            Table.Remove(entity);
+        }
     }
 
     public Task DeleteRangeAsync(IEnumerable<TEntity> entities)
     {
-        throw new NotImplementedException();
+        Table.RemoveRange(entities);
+        return Task.CompletedTask;
     }
 
-    public Task RemoveRangeAsync(IEnumerable<Int64> ids)
+    public async Task RemoveRangeAsync(IEnumerable<long> ids)
     {
-        throw new NotImplementedException();
+        List<TEntity>? entities = await Table.Where(e => ids.Contains(e.Id)).ToListAsync();
+        Table.RemoveRange(entities);
     }
 
-    public Task SaveAsync()
+    public async Task SaveAsync()
     {
-        throw new NotImplementedException();
+        await Context.SaveChangesAsync();
     }
 
     public Task UpdateAsync(TEntity entity)
     {
-        throw new NotImplementedException();
+        Table.Update(entity);
+        return Task.CompletedTask;
     }
 
-    public Task UpdatePartialAsync(Int64 id, Expression<Func<TEntity, object>> fields)
+    public Task UpdatePartialAsync(long id, Expression<Func<TEntity, object>> fields)
     {
-        throw new NotImplementedException();
+        TEntity? entity = Table.Find(id) ?? throw new InvalidOperationException("Entity not found.");
+        EntityEntry<TEntity>? entry = Context.Entry(entity);
+        if (fields.Body is NewExpression newExpression)
+        {
+            foreach (MemberInfo member in newExpression.Members)
+            {
+                entry.Property(member.Name).IsModified = true;
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException("Invalid fields expression. Use a New expression with property names.");
+        }
+
+        return Task.CompletedTask;
     }
 
     public Task UpdateRangeAsync(IEnumerable<TEntity> entities)
     {
-        throw new NotImplementedException();
+        Table.UpdateRange(entities);
+        return Task.CompletedTask;
     }
 }

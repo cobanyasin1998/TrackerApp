@@ -2,4 +2,5 @@
 
 public interface IUserBusinessRule
 {
+    Task IsExistsEmailAddress(string emailAddress);
 }
