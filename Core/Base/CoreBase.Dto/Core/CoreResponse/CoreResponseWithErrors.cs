@@ -19,7 +19,7 @@ public class CoreResponseWithErrors<TError> : CoreResponse, ICoreResponseWithErr
             Message = message,
             ErrorType = errorType,
             HttpStatusCode = httpStatusCode,
-            Success = false
+            IsSuccess = false
         };
     }
 }

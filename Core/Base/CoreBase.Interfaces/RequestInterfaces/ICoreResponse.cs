@@ -4,7 +4,7 @@ namespace CoreBase.Interfaces.RequestInterfaces;
 
 public interface ICoreResponse
 {
-    bool Success { get; set; }
+    bool IsSuccess { get; set; }
     string Message { get; set; }
     int HttpStatusCode { get; set; }
     DateTime Timestamp { get; set; }

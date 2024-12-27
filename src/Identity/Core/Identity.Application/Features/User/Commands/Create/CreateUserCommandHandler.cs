@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using CoreBase.Dto.Core.CoreResponse;
+using CoreBase.Events;
 using CoreBase.Extensions.Hashing;
 using CoreBase.Extensions.Random;
 using CoreBase.Identity.Entities.Base;
+using CoreBase.Interfaces.ServiceBusInterfaces;
 using CoreOnion.Application.BusinessRule;
 using Identity.Application.Abstractions.UnitOfWork;
 using Identity.Application.Features.User.Constants;
@@ -11,26 +13,28 @@ using MediatR;
 
 namespace Identity.Application.Features.User.Commands.Create;
 
-public class CreateUserCommandHandler(IMapper _mapper, IUnitOfWork _unitOfWork,IUserBusinessRule _userBusinessRule)
-    : IRequestHandler<CreateUserCommandRequest, BaseResponse<CreateUserCommandResponse>>
+public class CreateUserCommandHandler(IMapper _mapper, IUnitOfWork _unitOfWork, IUserBusinessRule _userBusinessRule, IServiceBus _serviceBus)
+    : IRequestHandler<CreateUserCommandRequest, Result<CreateUserCommandResponse>>
 {
-    public async Task<BaseResponse<CreateUserCommandResponse>> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
+    public async Task<Result<CreateUserCommandResponse>> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
     {
         await BusinessRuleValidator.CheckRulesAsync(
             () => _userBusinessRule.IsExistsEmailAddress(request.Email)
-        );
+            );
 
-        UserEntity entity = _mapper.Map<UserEntity>(request);
+        var userEntity = _mapper.Map<UserEntity>(request);
 
-        HashingHelper.CreatePasswordHash(GeneralRandomHelper.GenerateRandomPassword(), out byte[] passwordHash, out byte[] passwordSalt);
+        var pwd = GeneralRandomHelper.GenerateRandomPassword();
+        (userEntity.PasswordHash, userEntity.PasswordSalt) = HashingHelper.CreatePasswordHash(pwd);
+        userEntity.Username = request.Email;
 
-        entity.PasswordHash = passwordHash;
-        entity.PasswordSalt = passwordSalt;
-
-        await _unitOfWork.UserWriteRepository.AddAsync(entity);
+        await _unitOfWork.UserWriteRepository.AddAsync(userEntity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return BaseResponse<CreateUserCommandResponse>
-            .CreateSuccess(new CreateUserCommandResponse(entity.Id), UserConstants.Created);
+        await _serviceBus.PublishAsync(new UserAddedEvent(Email: request.Email, Password: pwd), cancellationToken);
+
+        return Result<CreateUserCommandResponse>
+            .Success(new CreateUserCommandResponse(userEntity.Id), UserConstants.Created);
     }
 }
+

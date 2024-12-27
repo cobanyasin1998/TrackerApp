@@ -13,7 +13,6 @@ public static class ServiceManagerExtensions
     {
         DatabaseConnection(services, configuration);
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-
     }
 
     private static void DatabaseConnection(IServiceCollection services, IConfiguration configuration)

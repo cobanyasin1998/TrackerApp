@@ -1,3 +1,5 @@
-﻿namespace CoreBase.Dto.Enum;
+﻿using CoreBase.Interfaces.DtoInterfaces;
 
-public record EnumListDto(Int32 Id, String Name);
+namespace CoreBase.Dto.Enum;
+
+public record EnumListDto(Int32 Id, String Name) : IDto;

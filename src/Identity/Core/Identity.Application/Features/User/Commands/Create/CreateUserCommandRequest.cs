@@ -3,8 +3,8 @@ using MediatR;
 
 namespace Identity.Application.Features.User.Commands.Create;
 
-public class CreateUserCommandRequest : IRequest<BaseResponse<CreateUserCommandResponse>>
+public class CreateUserCommandRequest : IRequest<Result<CreateUserCommandResponse>>
 {
-    public long OrganizationEntityId { get; set; }
-    public string Email { get; set; }
+    public required long OrganizationEntityId { get; set; }
+    public required string Email { get; set; }
 }

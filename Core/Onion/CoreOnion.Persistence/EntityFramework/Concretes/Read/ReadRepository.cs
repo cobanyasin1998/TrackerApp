@@ -21,8 +21,8 @@ public class ReadRepository<TEntity, TContext>(TContext Context) : IReadReposito
     public Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate)
         => Query.AnyAsync(predicate);
 
-    public Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
-        => Query.FirstOrDefaultAsync(predicate);
+    public Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
+        => Query.FirstOrDefaultAsync(predicate,cancellationToken);
 
     public IQueryable<TEntity> GetAll(bool tracking = false)
         => tracking ? Query : Query.AsNoTracking();

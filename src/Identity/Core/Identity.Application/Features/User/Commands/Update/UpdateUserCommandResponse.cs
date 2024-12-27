@@ -1,5 +1,9 @@
-﻿namespace Identity.Application.Features.User.Commands.Update;
+﻿using CoreBase.Dto.Core.EncryptedDto;
 
-public class UpdateUserCommandResponse
+namespace Identity.Application.Features.User.Commands.Update;
+
+public class UpdateUserCommandResponse : EncryptedResponseDto
 {
+    public UpdateUserCommandResponse(long Id) 
+        => this.Id = Id;
 }

@@ -33,7 +33,7 @@ public class WriteRepository<TEntity, TContext>(TContext Context) : IWriteReposi
 
     public Task DeleteAsync(TEntity entity)
     {
-        Table.Remove(entity);
+        entity.Status = CoreBase.Enums.Entities.EEntityStatus.Inactive;
         return Task.CompletedTask;
     }
 

@@ -5,12 +5,10 @@ namespace CoreBase.Extensions.Hashing;
 
 public static class HashingHelper
 {
-    public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+    public static (byte[] passwordHash, byte[] passwordSalt) CreatePasswordHash(string password)
     {
         using HMACSHA512 hmac = new();
-
-        passwordSalt = hmac.Key;
-        passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        return (hmac.ComputeHash(Encoding.UTF8.GetBytes(password)),hmac.Key);
     }
 
     public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)

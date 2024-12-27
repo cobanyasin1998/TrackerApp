@@ -1,5 +1,10 @@
-﻿namespace Identity.Application.Features.User.Commands.Delete;
+﻿using CoreBase.Dto.Core.CoreResponse;
+using CoreBase.Dto.Core.EncryptedDto;
+using MediatR;
 
-public class DeleteUserCommandRequest
+namespace Identity.Application.Features.User.Commands.Delete;
+
+public class DeleteUserCommandRequest :EncryptedRequestDto, IRequest<Result<DeleteUserCommandResponse>>
 {
+    
 }

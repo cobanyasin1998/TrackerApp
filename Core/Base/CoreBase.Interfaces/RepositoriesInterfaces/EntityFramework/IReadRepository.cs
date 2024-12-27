@@ -14,7 +14,7 @@ public interface IReadRepository<T> where T : class
     Task<T?> GetByIdAsync(long id);
 
     // Get the first record matching a predicate
-    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate,CancellationToken cancellationToken);
 
     // Check if any record matches a predicate
     Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);

@@ -8,4 +8,6 @@ builder.AddProject<Projects.TrackerGateway_API>("trackergateway-api");
 
 builder.AddProject<Projects.FileStorage_API>("filestorage-api");
 
+builder.AddProject<Projects.Notification_API>("notification-api");
+
 builder.Build().Run();

@@ -1,5 +1,10 @@
-﻿namespace Identity.Application.Features.User.Queries.GetById;
+﻿using CoreBase.Dto.Core.EncryptedDto;
 
-public class GetByIdUserQueryResponse
+namespace Identity.Application.Features.User.Queries.GetById;
+
+public class GetByIdUserQueryResponse : EncryptedResponseDto
 {
+    public GetByIdUserQueryResponse(long Id)
+        => this.Id = Id;
+    public string UserName { get; set; }
 }

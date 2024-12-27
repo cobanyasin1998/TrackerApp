@@ -1,7 +1,10 @@
+using CoreOnion.Application.ServiceRegistration;
 using Identity.Application.ServiceRegistration;
 using Identity.Persistence.ServiceRegistration;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using CoreOnion.AppBus.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +16,14 @@ builder.Services.AddControllers().AddNewtonsoftJson(opt =>
     opt.SerializerSettings.ContractResolver = new DefaultContractResolver();
     opt.SerializerSettings.Formatting = Formatting.Indented;
 });
-
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+builder.Services.AddCoreApplicationServices();
 builder.Services.IdentityApplicationAddServices();
 builder.Services.IdentityPersistenceAddServices(builder.Configuration);
+builder.Services.AddBusExt();
 builder.Services.AddSwaggerDocument(config =>
 {
     config.PostProcess = document =>

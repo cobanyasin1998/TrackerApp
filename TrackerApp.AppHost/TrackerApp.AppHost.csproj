@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Gateway\TrackerGateway.API\TrackerGateway.API.csproj" />
     <ProjectReference Include="..\Services\FileStorage.API\FileStorage.API.csproj" />
     <ProjectReference Include="..\Services\Identity.API\Identity.API.csproj" />
+    <ProjectReference Include="..\Services\Notification.API\Notification.API.csproj" />
     <ProjectReference Include="..\Services\Product.API\Product.API.csproj" />
   </ItemGroup>
 

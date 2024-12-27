@@ -1,6 +1,10 @@
-﻿namespace Identity.Application.Features.User.Rules.Abstractions;
+﻿using CoreBase.Interfaces.BusinessInterfaces;
 
-public interface IUserBusinessRule
+namespace Identity.Application.Features.User.Rules.Abstractions;
+
+public interface IUserBusinessRule : IBaseBusinessRule
 {
     Task IsExistsEmailAddress(string emailAddress);
+    Task IsExistsEmailAddress(string emailAddress, long id);
+
 }

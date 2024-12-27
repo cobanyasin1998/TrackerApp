@@ -1,5 +1,11 @@
-﻿namespace Identity.Application.Features.User.Commands.Delete;
+﻿using CoreBase.Dto.Core.EncryptedDto;
 
-public class DeleteUserCommandResponse
+namespace Identity.Application.Features.User.Commands.Delete;
+
+public class DeleteUserCommandResponse : EncryptedResponseDto
 {
+    public DeleteUserCommandResponse(long Id)
+    {
+        this.Id = Id;
+    }
 }

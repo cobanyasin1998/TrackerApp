@@ -1,10 +1,10 @@
-﻿using CoreBase.Identity.Entities.Base;
-using CoreBase.Interfaces.RepositoriesInterfaces.EntityFramework;
+﻿using CoreBase.Interfaces.RepositoriesInterfaces.EntityFramework;
+using Identity.Application.Abstractions.Repositories.User;
 
 namespace Identity.Application.Abstractions.UnitOfWork;
 
 public interface IUnitOfWork : IUnitOfWorkTransaction
 {
-    IWriteRepository<UserEntity> UserWriteRepository { get; }
-    IReadRepository<UserEntity> UserReadRepository { get; }
+    IUserWriteRepository UserWriteRepository { get; }
+    IUserReadRepository UserReadRepository { get; }
 }

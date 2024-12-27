@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\Onion\CoreOnion.AppBus\CoreOnion.AppBus.csproj" />
+    <ProjectReference Include="..\..\Core\Onion\CoreOnion.Application\CoreOnion.Application.csproj" />
     <ProjectReference Include="..\..\Core\Onion\CoreOnion.Presentation\CoreOnion.Presentation.csproj" />
     <ProjectReference Include="..\..\src\Identity\Core\Identity.Application\Identity.Application.csproj" />
     <ProjectReference Include="..\..\src\Identity\Infrastructure\Identity.Persistence\Identity.Persistence.csproj" />
