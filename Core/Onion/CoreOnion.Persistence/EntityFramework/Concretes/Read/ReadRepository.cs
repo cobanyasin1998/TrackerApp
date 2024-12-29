@@ -12,8 +12,10 @@ public class ReadRepository<TEntity, TContext>(TContext Context) : IReadReposito
     where TEntity : BaseEntity
     where TContext : DbContext
 {
-    public DbSet<TEntity> Table => Context.Set<TEntity>();
-    public IQueryable<TEntity> Query => Table.BaseQuery();
+    public DbSet<TEntity> Table 
+        => Context.Set<TEntity>();
+    public IQueryable<TEntity> Query 
+        => Table.BaseQuery();
 
     public Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null)
         => predicate == null ? Query.CountAsync() : Query.CountAsync(predicate);

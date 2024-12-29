@@ -32,10 +32,10 @@ public class TokenService(IConfiguration _configuration) : ITokenService
     private static List<Claim> GetClaims(UserEntity user)
     {
         List<Claim> claims = [];
-       // claims.AddEmail(user.Email);
-       // claims.AddName(user.Username);
+        claims.AddEmail(user.Email);
+        claims.AddName(user.Username);
         claims.AddNameIdentifier(user.Id.ToString());
-        //claims.Add(new Claim("OrganizationId", user.OrganizationEntityId.ToString()));
+        claims.Add(new Claim("OrganizationId", user.OrganizationEntityId.ToString()));
         return claims;
     }
 

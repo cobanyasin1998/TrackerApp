@@ -20,10 +20,10 @@ public static class HttpRequestExtensions
         remoteIp ??= request.HttpContext.Connection.RemoteIpAddress?.ToString();
 
         if (String.IsNullOrWhiteSpace(remoteIp))
-            throw new Exception("IP Address Not Found");
+            throw new ArgumentNullException(nameof(remoteIp), "IP Address cannot be null or whitespace.");
 
         if (!System.Net.IPAddress.TryParse(remoteIp, out _))
-            throw new Exception("Invalid IP Address");
+            throw new FormatException("The provided IP Address is not in a valid format.");
 
         return remoteIp;
     }

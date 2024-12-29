@@ -3,7 +3,7 @@ using System.Text;
 
 namespace CoreBase.Extensions.Random;
 
-public class GeneralRandomHelper
+public static class GeneralRandomHelper
 {
     private static readonly System.Random _random = new();
 
@@ -25,23 +25,20 @@ public class GeneralRandomHelper
 
         return password.ToString();
     }
-    public static string GenerateRandomPassword(int length = 12) 
-        => GenerateRandom(length, true, true, true, true);
-   
     public static string GenerateRandom(int length, bool includeUppercase, bool includeLowercase, bool includeNumbers, bool includeSpecialChars)
     {
-        StringBuilder validChars = new();
+        StringBuilder newChars = new();
 
         if (includeLowercase)
-            validChars.Append(lowerChars);
+            newChars.Append(lowerChars);
         if (includeUppercase)
-            validChars.Append(upperChars);
+            newChars.Append(upperChars);
         if (includeNumbers)
-            validChars.Append(numberChars);
+            newChars.Append(numberChars);
         if (includeSpecialChars)
-            validChars.Append(specialChars);
+            newChars.Append(specialChars);
 
-        if (validChars.Length == 0)
+        if (newChars.Length == 0)
             throw new ArgumentException("En az bir karakter türü seçilmelidir.");
 
         StringBuilder password = new(length);
@@ -54,4 +51,7 @@ public class GeneralRandomHelper
 
         return password.ToString();
     }
+
+    public static string GenerateRandomPassword(int length = 12)
+       => GenerateRandom(length, true, true, true, true);
 }
