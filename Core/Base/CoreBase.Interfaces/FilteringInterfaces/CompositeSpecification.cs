@@ -12,12 +12,12 @@ public class CompositeSpecification<T>(IEnumerable<ISpecification<T>> _specifica
             return x => true; // Boşsa her şeyi eşleştir
         }
 
-        var parameter = Expression.Parameter(typeof(T));
+        ParameterExpression? parameter = Expression.Parameter(typeof(T));
         Expression? body = null;
 
-        foreach (var spec in _specifications)
+        foreach (ISpecification<T> spec in _specifications)
         {
-            var currentExpression = Expression.Invoke(spec.ToExpression(), parameter);
+            InvocationExpression currentExpression = Expression.Invoke(spec.ToExpression(), parameter);
 
             body = body == null
                 ? currentExpression

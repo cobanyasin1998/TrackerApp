@@ -1,8 +1,8 @@
 ﻿using CoreBase.Dto.Core.CoreResponse;
+using CoreBase.Identity.Entities.Base;
 using Identity.Application.Abstractions.UnitOfWork;
 using Identity.Application.Features.User.Constants;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace Identity.Application.Features.User.Commands.Delete;
 
@@ -11,7 +11,7 @@ public class DeleteUserCommandHandler(IUnitOfWork _unitOfWork)
 {
     public async Task<Result<DeleteUserCommandResponse>> Handle(DeleteUserCommandRequest request, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserReadRepository.FirstOrDefaultAsync(user => user.Id == request.Id,cancellationToken);
+        UserEntity? user = await _unitOfWork.UserReadRepository.FirstOrDefaultAsync(user => user.Id == request.Id,cancellationToken);
 
         if (user is null)
             return Result<DeleteUserCommandResponse>.NotFoundRecord(UserConstants.NotFound);

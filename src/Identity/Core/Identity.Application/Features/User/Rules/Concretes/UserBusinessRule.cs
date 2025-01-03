@@ -2,28 +2,23 @@
 using CoreBase.Extensions.Text;
 using Identity.Application.Abstractions.UnitOfWork;
 using Identity.Application.Features.User.Rules.Abstractions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Application.Features.User.Rules.Concretes;
 
-public class UserBusinessRule(IUnitOfWork unitOfWork) : IUserBusinessRule
+public class UserBusinessRule(IUnitOfWork _unitOfWork) : IUserBusinessRule
 {
-    public Task IsExistsEmailAddress(string emailAddress)
+    public async Task IsExistsEmailAddress(string emailAddress, CancellationToken cancellationToken = default)
     {
-        bool isExists = unitOfWork.UserReadRepository.GetWhere(user => user.Email.Equals(emailAddress.RemoveSpacesAndTrim())).Any();
+        bool isExists = await _unitOfWork.UserReadRepository.GetWhere(user => user.Email.Equals(emailAddress.RemoveSpacesAndTrim())).AnyAsync(cancellationToken);
         if (isExists)
-        {
             throw new BusinessRuleException("Email address already exists.");
-        }
-        return Task.CompletedTask;
     }
 
-    public Task IsExistsEmailAddress(string emailAddress, long id)
+    public async Task IsExistsEmailAddress(string emailAddress, long id, CancellationToken cancellationToken = default)
     {
-        bool isExists = unitOfWork.UserReadRepository.GetWhere(user => user.Id == id && user.Email.Equals(emailAddress.RemoveSpacesAndTrim())).Any();
+        bool isExists = await _unitOfWork.UserReadRepository.GetWhere(user => user.Id == id && user.Email.Equals(emailAddress.RemoveSpacesAndTrim())).AnyAsync(cancellationToken);
         if (isExists)
-        {
             throw new BusinessRuleException("Email address already exists.");
-        }
-        return Task.CompletedTask;
     }
 }

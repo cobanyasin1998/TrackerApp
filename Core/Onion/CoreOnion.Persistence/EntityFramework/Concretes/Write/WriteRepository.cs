@@ -1,5 +1,4 @@
 ﻿using CoreBase.Domain;
-using CoreBase.Extensions.IQueryable;
 using CoreBase.Interfaces.RepositoriesInterfaces.EntityFramework;
 using CoreOnion.Persistence.EntityFramework.Abstractions;
 using Microsoft.EntityFrameworkCore;

@@ -22,7 +22,7 @@ public static class UserSpecificationFactory
             //specifications.Add(new EmailOrUsernameSpecification(filters.EmailorUsername));
         }
 
-        return specifications.Any()
+        return specifications.Count != 0
             ? new CompositeSpecification<UserEntity>(specifications)
             : new NullSpecification<UserEntity>();
     }

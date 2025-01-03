@@ -1,9 +1,12 @@
-﻿namespace CoreBase.Dto.RequestResponse.Response.GetAll;
+﻿using CoreBase.Interfaces.DtoInterfaces;
+
+namespace CoreBase.Dto.RequestResponse.Response.GetAll;
 
 
-public class GetAllResultDto<T>
+public class GetAllResultDto<TDto>(List<TDto> result, int totalPage, int totalCount)
+    where TDto : IDto
 {
-    public List<T> Result { get; set; } = [];
-    public Int32 TotalCount { get; set; }
-    public Int32 TotalPage { get; set; }
+    public List<TDto> Result { get; set; } = result;
+    public Int32 TotalCount { get; set; } = totalCount;
+    public Int32 TotalPage { get; set; } = totalPage;
 }

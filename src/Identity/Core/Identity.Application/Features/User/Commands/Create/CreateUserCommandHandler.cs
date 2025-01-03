@@ -19,12 +19,12 @@ public class CreateUserCommandHandler(IMapper _mapper, IUnitOfWork _unitOfWork, 
     public async Task<Result<CreateUserCommandResponse>> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
     {
         await BusinessRuleValidator.CheckRulesAsync(
-            () => _userBusinessRule.IsExistsEmailAddress(request.Email)
+            () => _userBusinessRule.IsExistsEmailAddress(request.Email,cancellationToken)
             );
 
-        var userEntity = _mapper.Map<UserEntity>(request);
+        UserEntity? userEntity = _mapper.Map<UserEntity>(request);
 
-        var pwd = GeneralRandomHelper.GenerateRandomPassword();
+        string pwd = GeneralRandomHelper.GenerateRandomPassword();
         (userEntity.PasswordHash, userEntity.PasswordSalt) = HashingHelper.CreatePasswordHash(pwd);
         userEntity.Username = request.Email;
 
